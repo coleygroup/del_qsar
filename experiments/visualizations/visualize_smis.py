@@ -29,8 +29,8 @@ sys.path += [os.path.dirname(DELQSAR_ROOT)]
 
 from del_qsar import featurizers, models
 
-if not os.path.isdir(os.path.join(DELQSAR_ROOT, 'results')):
-    os.mkdir(os.path.join(DELQSAR_ROOT, 'results'))
+if not os.path.isdir(os.path.join(DELQSAR_ROOT, 'experiments', 'results')):
+    os.mkdir(os.path.join(DELQSAR_ROOT, 'experiments', 'results'))
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string('csv', 'triazine_lib_sEH_SIRT2_QSAR.csv', 'csv filename')
