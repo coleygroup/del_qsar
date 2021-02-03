@@ -265,7 +265,7 @@ where `--layer_sizes` and `--dropout` are hyperparameters of the saved model
 This visualization requires:
 - (i) a file with stored fingerprints for the DD1S CAIX dataset (for instructions, see the "Initial set-up" section above)
 - (ii) a file with stored fingerprints for the triazine library (for instructions, see the "Initial set-up" section above)
-- (iii) saved random split FP-FFNN models; model hyperparameter values (including learning rate) are specified in the supplemental results spreadsheet
+- (iii) saved random split FP-FFNN models; model hyperparameter values (including learning rate) are specified in `compiled_results.xlsx` in the `experiments/paper_results` folder
   - DD1S CAIX (seeds 0, 1, 2)
   - triazine sEH (seed 0)
   - triazine SIRT2 (seed 0)
@@ -310,13 +310,18 @@ python UMAP.py --num_threads <number of threads> --pubchem_fps_h5 <name of HDF5 
 - DD1S CAIX histograms (1D and 2D) and parity plots
   -  Requires:
   - (i) a file with stored fingerprints for the DD1S CAIX dataset (for instructions, see the "Initial set-up" section above)
-  - (ii) two saved FP-FFNN models (random split, cycle 1+2 split); model hyperparameter values (including learning rate) are specified in the supplemental results spreadsheet
+  - (ii) two saved FP-FFNN models (random split, cycle 1+2 split); model hyperparameter values (including learning rate) are specified in `compiled_results.xlsx` in the `experiments/paper_results` folder
   - Run all cells in `DD1S CAIX histograms and parity plots.ipynb` (can modify fingerprint and model filenames/paths as necessary, in the fourth cell from the top)
 - Triazine sEH / SIRT2 parity plots
   - Requires:
   - (i) a file with stored fingerprints for the triazine library (for instructions, see the "Initial set-up" section above)
-  - (ii) two saved random split FP-FFNN models (triazine sEH, triazine SIRT2); model hyperparameter values (including learning rate) are specified in the supplemental results spreadsheet
+  - (ii) two saved random split FP-FFNN models (triazine sEH, triazine SIRT2); model hyperparameter values (including learning rate) are specified in `compiled_results.xlsx` in the `experiments/paper_results` folder
   - Run all cells in `Triazine parity plots.ipynb` (can modify fingerprint and model filenames/paths as necessary, in the fourth cell from the top)
+- Disynthon parity plots
+  - Requires:
+  - (i) a file with stored fingerprints for the triazine library (for instructions, see the "Initial set-up" section above)
+  - (ii) two saved random split FP-FFNN models (triazine sEH, triazine SIRT2); model hyperparameter values (including learning rate) are specified in `compiled_results.xlsx` in the `experiments/paper_results` folder
+  - Run all cells in `Disynthon parity plots.ipynb` (can modify fingerprint and model filenames/paths as necessary, in the fourth cell from the top)
 - Distributional shift histograms
   - Run all cells in `DD1S CAIX cycle 2 distributional shift.ipynb`
 - Binary classification baseline comparison bar graphs (fixed threshold)
@@ -328,10 +333,10 @@ python UMAP.py --num_threads <number of threads> --pubchem_fps_h5 <name of HDF5 
 - 2D histograms of predicted vs. calculated enrichment for triazine sEH and SIRT2 datasets
   -  Requires:
   - (i) a file with stored fingerprints for the triazine library (for instructions, see the "Initial set-up" section above)
-  - (ii) four saved FP-FFNN models (triazine sEH + random split, triazine sEH + cycle 1+2+3 split, triazine SIRT2 + random split, triazine SIRT2 + cycle 1+2+3 split); model hyperparameter values (including learning rate) are specified in the supplemental results spreadsheet
+  - (ii) four saved FP-FFNN models (triazine sEH + random split, triazine sEH + cycle 1+2+3 split, triazine SIRT2 + random split, triazine SIRT2 + cycle 1+2+3 split); model hyperparameter values (including learning rate) are specified in `compiled_results.xlsx` in the `experiments/paper_results` folder
   - Run all cells in `Triazine 2D histograms.ipynb` (can modify fingerprint and model filenames/paths as necessary, in the fourth cell from the top)
 - Parity plots to evaluate generalization ability
   -  Requires:
   - (i) a file with stored fingerprints for the triazine library (for instructions, see the "Initial Set-up" section above)
-  - (ii) saved cycle 1+2+3 models (one for each (triazine dataset, model type, replicate/seed) triple, where the included model types are FP-FFNN, OH-FFNN, and D-MPNN); model hyperparameter values (including learning rate) are specified in the supplemental results spreadsheet
+  - (ii) saved cycle 1+2+3 models (one for each (triazine dataset, model type, replicate/seed) triple, where the included model types are FP-FFNN, OH-FFNN, and D-MPNN); model hyperparameter values (including learning rate) are specified in `compiled_results.xlsx` in the `experiments/paper_results` folder
   - Run all cells in `Triazine generalization parity plots.ipynb` (can modify fingerprint and model filenames/paths as necessary, in the fourth cell from the top)

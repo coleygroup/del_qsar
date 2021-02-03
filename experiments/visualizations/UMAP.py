@@ -12,7 +12,6 @@ sys.path += [os.path.dirname(DELQSAR_ROOT)]
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('num_threads', 40, 'Number of threads')
-flags.DEFINE_boolean('train_on_all', True, 'Train on all three datasets simultaneously')
 flags.DEFINE_string('pubchem_fps_h5', 'pubchem_fps_4096_bits.h5', 'HDF5 file with stored fingerprints for PubChem')
 flags.DEFINE_string('DD1S_fps_h5', 'DOS-DEL-1_4096_bits_all_fps.h5', 'HDF5 file with stored fingerprints for DOS-DEL-1')
 flags.DEFINE_string('triazine_fps_h5', 'triazine_4096_bits_all_fps.h5', 
@@ -34,33 +33,24 @@ def main(argv):
     x_triazine = np.array(hf_triazine['all_fps'])
     hf_triazine.close()
     
-    data_indices_DD1S = np.arange(int(x_DD1S.shape[0]))
-    np.random.shuffle(data_indices_DD1S)
-    subset_DD1S = data_indices_DD1S[:int(0.1*x_DD1S.shape[0])]
-    x_DD1S = x_DD1S[subset_DD1S,:]
-    
     data_indices_triazine = np.arange(int(x_triazine.shape[0]))
     np.random.shuffle(data_indices_triazine)
-    subset_triazine = data_indices_triazine[:int(0.1*x_triazine.shape[0])]
-    x_triazine = x_triazine[subset_triazine,:]
-   
-    if FLAGS.train_on_all:
-        x_all = np.concatenate((x_pubchem, x_DD1S, x_triazine), axis=0)
-        print(f'Combined dataset shape: {x_all.shape}\n')
-        data_indices_all = np.arange(int(x_all.shape[0]))
-        np.random.shuffle(data_indices_all)
-        x_all = x_all[data_indices_all,:]
+    train_subset_triazine = data_indices_triazine[:int(0.1*x_triazine.shape[0])]
+    x_triazine_subset = x_triazine[train_subset_triazine,:]
+
+    x_all = np.concatenate((x_pubchem, x_DD1S, x_triazine_subset), axis=0)
+    print(f'Combined dataset shape: {x_all.shape}\n')
+    data_indices_all = np.arange(int(x_all.shape[0]))
+    np.random.shuffle(data_indices_all)
+    x_all = x_all[data_indices_all,:]
     
     numba.set_num_threads(FLAGS.num_threads)
     r = umap.UMAP(metric='jaccard', verbose=True, low_memory=True)
     
-    if FLAGS.train_on_all:
-        r.fit(x_all)
-        umap_pubchem = r.transform(x_pubchem)
-    else:
-        umap_pubchem = r.fit_transform(x_pubchem)
+    r.fit(x_all)
+    umap_pubchem = r.transform(x_pubchem)
     umap_DD1S = r.transform(x_DD1S)
-    umap_triazine = r.transform(x_triazine)
+    umap_triazine = r.transform(x_triazine_subset)
     print(f'Pubchem embedding shape: {umap_pubchem.shape}')
     print(f'DD1S embedding shape: {umap_DD1S.shape}')
     print(f'Triazine embedding shape: {umap_triazine.shape}')
