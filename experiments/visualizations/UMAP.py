@@ -33,12 +33,17 @@ def main(argv):
     x_triazine = np.array(hf_triazine['all_fps'])
     hf_triazine.close()
     
+    data_indices_DD1S = np.arange(int(x_DD1S.shape[0]))
+    np.random.shuffle(data_indices_DD1S)
+    train_subset_DD1S = data_indices_DD1S[:int(0.1*x_DD1S.shape[0])]
+    x_DD1S_subset = x_DD1S[train_subset_DD1S,:]
+    
     data_indices_triazine = np.arange(int(x_triazine.shape[0]))
     np.random.shuffle(data_indices_triazine)
     train_subset_triazine = data_indices_triazine[:int(0.1*x_triazine.shape[0])]
     x_triazine_subset = x_triazine[train_subset_triazine,:]
 
-    x_all = np.concatenate((x_pubchem, x_DD1S, x_triazine_subset), axis=0)
+    x_all = np.concatenate((x_pubchem, x_DD1S_subset, x_triazine_subset), axis=0)
     print(f'Combined dataset shape: {x_all.shape}\n')
     data_indices_all = np.arange(int(x_all.shape[0]))
     np.random.shuffle(data_indices_all)
