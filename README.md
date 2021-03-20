@@ -5,7 +5,6 @@ Prediction of enrichment from molecular structure, using DNA-encoded libraries a
 - Python (3.6.10)
 - [chemprop](https://github.com/chemprop/chemprop) (0.0.2)
 - Numpy (1.18.5)
-- SciPy (1.4.1)
 - pandas (1.0.4)
 - PyTorch (1.5.0)
 - RDKit (2020.03.2)
@@ -296,8 +295,8 @@ python UMAP.py --num_threads <number of threads> --pubchem_fps_h5 <name of HDF5 
   - Run all cells in `Loss function plots.ipynb`
 - Test loss bar graphs
   - Requires csv files `DD1S_CAIX_test_losses.csv`, `triazine_sEH_test_losses.csv`, `triazine_SIRT2_test_losses.csv`, `triazine_multitask_sEH_test_losses.csv` and `triazine_multitask_SIRT2_test_losses.csv` in the `experiments` folder 
-  - For the single-task model test loss csv files, the column headers should be `model type`, (`seed`), `random` (for random split), `cycle1`, `cycle2`, `cycle3`, `cycle12`, `cycle13`, `cycle23`, and `cycle123` (for the various cycle splits). The model type names should be recorded as `OH-FFNN`, `OH-FFNN_pt`, `FP-FFNN`, `FP-FFNN_pt`, `D-MPNN`, and `D-MPNN_pt`
-  - For the multi-task model test loss csv files (which should include test losses for both the multi-task models and the corresponding single-task models), the column headers should be `model type`, (`seed`), `random`, and `cycle123`. The model type names should be recorded as `OH-FFNN_single-task`, `FP-FFNN_single-task`, `D-MPNN_single-task`, `OH-FFNN_multi-task`, `FP-FFNN_multi-task`, and `D-MPNN_multi-task`
+  - For the single-task model test loss csv files, the column headers should be `model type`, (`seed`), `split` (random, cycle1, ..., cycle12, ..., cycle123), and `test loss`. The model type names should be recorded as `OH-FFNN`, `OH-FFNN_pt`, `FP-FFNN`, `FP-FFNN_pt`, `D-MPNN`, and `D-MPNN_pt`
+  - For the multi-task model test loss csv files (which should include test losses for both the multi-task models and the corresponding single-task models), the column headers should be `model type`, (`seed`), `split` (random, cycle123), and `test loss`. The model type names should be recorded as `OH-FFNN_single-task`, `FP-FFNN_single-task`, `D-MPNN_single-task`, `OH-FFNN_multi-task`, `FP-FFNN_multi-task`, and `D-MPNN_multi-task`
   - Run all cells in `Test loss bar graphs.ipynb`
 - DD1S CAIX hyperparameter optimization result histograms
   - Requires two csv files `DD1S_CAIX_hyperparameter_optimization_results.csv` (for the D-MPNN / D-MPNN_pt regression models) and `bin_DD1S_CAIX_hyperparameter_optimization_results.csv` (for the random split D-MPNN binary classifiers) in the `experiments` folder, each formatted like the following (example values are shown):

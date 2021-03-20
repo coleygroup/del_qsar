@@ -128,7 +128,7 @@ class DELQSARModel(nn.Module):
                     train_losses.append([loss.item() for loss in losses_col_sum])
                     train_n += len(batch_indices)
                 
-                    # Check for exploding loss
+                    # Check for NaN loss
                     if np.isnan(losses.sum()):
                         self.best_val_loss = float('inf')
                         return self.best_val_loss
@@ -184,7 +184,7 @@ class DELQSARModel(nn.Module):
                     train_losses.append([loss.item() for loss in losses_col_sum])
                     train_n += len(batch_indices)
                 
-                    # Check for exploding loss
+                    # Check for NaN loss
                     if np.isnan(losses.sum()):
                         self.best_val_loss = float('inf')
                         return self.best_val_loss

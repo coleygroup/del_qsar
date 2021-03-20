@@ -41,6 +41,8 @@ flags.DEFINE_string('model_path', None, 'File path from experiments folder for s
 flags.DEFINE_float('dropout', None, 'Dropout rate')
 flags.DEFINE_list('layer_sizes', None, 'FFN layer sizes')
 flags.DEFINE_list('cpd_ids', None, 'cpd_ids of the compounds to visualize with atom annotations')
+flags.DEFINE_float('img_size', 2.5, 'Height/width of image (in inches)')
+flags.DEFINE_float('font_size', 0.85, 'Heteroatom fontsize')
 
 def main(argv):
     del argv
@@ -119,7 +121,12 @@ def main(argv):
             lf.write(f'SMILES: {smi}\n')
             lf.write(f'Predicted enrichment: {enrichment:.2f}\n\n')
         lf.close()
-        d = Draw.MolDraw2DCairo(600, 600)
+        dim = int(300*FLAGS.img_size)
+        d = Draw.MolDraw2DCairo(dim, dim)
+        d.SetFontSize(FLAGS.font_size)
+        d.drawOptions().updateAtomPalette({9: (1.0, 0.0, 0.4980392156862745),
+                                           16: (1.0, 0.3411764705882353, 0.2),
+                                           17: (0.4980392156862745, 0.0, 1.0)})
         if scale != 0:
             SimilarityMaps.GetSimilarityMapFromWeights(mol, [w/scale for w in weights], draw2d=d)
         else:

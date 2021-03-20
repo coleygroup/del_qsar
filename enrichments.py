@@ -1,7 +1,4 @@
-from functools import partial
-from scipy import stats
 import numpy as np
-from scipy.optimize import fsolve, minimize, minimize_scalar
 
 # Asymptotic tests based on normal approximations
 # doi:10.1002/bimj.200710403
