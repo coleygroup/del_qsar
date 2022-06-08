@@ -98,6 +98,10 @@ For `single_model_run.py`:
   - `'MoleculeModel'` (directed message passing neural network)
 - `--lr <initial learning rate>`
 - `--dropout <dropout rate>`
+- `--eval_metric <loss function used to evaluate the model>`
+  - Options include:
+  - `'NLL'` (negative log-likelihood)
+  - `'MSE'` (mean-squared error)
 - For feed-forward neural network:
   - `--layer_sizes <hidden layer sizes>`
 - For directed message passing neural network:

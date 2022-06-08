@@ -253,7 +253,7 @@ def objective(trial):
         raise ValueError('Unknown loss function for training')    
 
     # Loss function during evaluation (only used for regression models)
-    model.loss_fn_eval = losses.loss_fn_nlogprob
+    model.eval_metric = losses.loss_fn_nlogprob
     
     logging.info(str(model))
     with open(LOG_FILE, 'a') as lf:

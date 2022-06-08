@@ -38,6 +38,7 @@ flags.DEFINE_float('threshold_val', 99.5, 'Threshold value; exact value or perce
 
 flags.DEFINE_enum('loss_fn_train', 'nlogprob', ['nlogprob', 'MSE', 'BCE'], 
                   'Loss function during training (note: classifiers automatically use BCE)')
+flags.DEFINE_enum('eval_metric', 'NLL', ['NLL', 'MSE'], 'Metric for evaluating models')
 
 flags.DEFINE_float('lr', 1e-5, 'Initial learning rate')
 flags.DEFINE_float('dropout', 0.05, 'Dropout rate')
@@ -277,7 +278,10 @@ def main(argv):
         raise ValueError('Unknown loss function for training')
     
     # Loss function during evaluation (only used for regression models)
-    model.loss_fn_eval = losses.loss_fn_nlogprob
+    if FLAGS.eval_metric == 'NLL':
+        model.eval_metric = losses.loss_fn_nlogprob
+    elif FLAGS.eval_metric == 'MSE':
+        model.eval_metric = losses.loss_fn_MSE
     
     logging.info(str(model))
     with open(LOG_FILE, 'a') as lf:
@@ -334,12 +338,12 @@ def main(argv):
                 lf.write(f'{datetime.now()} INFO: {slice_label} ({len(test_preds)} compounds) ROC AUC = {np.squeeze(formatted_roc_auc)}\n')
                 lf.write(f'{datetime.now()} INFO: {slice_label} ({len(test_preds)} compounds) PR AUC = {np.squeeze(formatted_pr_auc)}\n')
             return test_roc_auc, test_pr_auc, test_preds
-
+        
         test_losses, test_enrichments = model.evaluate_on_del(
             x, exp_counts, bead_counts, test_slice, batch_size=BATCH_SIZE,
             device=FLAGS.device, num_workers=FLAGS.num_workers,
         )
-
+            
         avg_test_loss = np.sum(test_losses, axis=0) / test_losses.shape[0]
         formatted_loss = ['{0:.5f}'.format(loss) for loss in avg_test_loss]
         logging.info(f'{slice_label} ({len(test_enrichments)} compounds) average loss = {np.squeeze(formatted_loss)}')
